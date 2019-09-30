@@ -6,9 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        @font-face {
+            font-family: 'dokabenfont';
+            src: url("NewDokabenFont_.otf");
+        }
         #dokaben{
+            font-family: 'dokabenfont';
             font-size:1000%;
             color:#ff5500
+        }
+        .ani0{
+            transform: rotateX(88deg);
         }
         .ani1 {
             transform: rotateX(80deg);
@@ -40,7 +48,7 @@
     </style>
 </head>
 <body>
-    <div class="ani1" id="dokaben">ドカベン</div>
+    <div class="ani9" id="dokaben">ドカベン</div>
     <form name="aaa">
     <input type="text" id="dokabentext" value="ドカベン"><input type="button" name="db" id="dokabutton" value="ドカベンする" onclick="dokabenscript()">
     </form>
@@ -54,7 +62,7 @@
             aaa=1
             var obj = document.getElementById("dokaben");
             obj.innerHTML=document.getElementById("dokabentext").value;
-            count = 1;
+            count = 0;
             obj.classList.remove("ani9")
             obj.classList.remove("ani8")
             obj.classList.remove("ani7")
@@ -63,7 +71,8 @@
             obj.classList.remove("ani4")
             obj.classList.remove("ani3")
             obj.classList.remove("ani2")
-            obj.classList.add("ani1")
+            obj.classList.remove("ani1")
+            obj.classList.add("ani0")
             var id = setInterval(function(){
                 obj.classList.remove("ani"+count);
                 count++;
