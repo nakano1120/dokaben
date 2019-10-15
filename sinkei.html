@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body{
+        text-align:center;
+        background-color:beige;
+    }
+    .youso{
+        display:inline-block;
+        margin:0 auto;
+        width:80%;
+        background-color:#ffffff;
+    }
+    table{
+        display:inline-block;
+        margin:0 auto;
+        background-color:darkseagreen;
+        border-radius:10px;
+    }
+    td{
+        width:90px;
+        height:90px;
+        border-radius:10px;
+        font-size:150%;
+    }
+    td:hover{
+        background-color:deeppink;
+    }
+    </style>
+</head>
+<body>
+    <h1>神経衰弱</h1>
+    <div class="youso">
+    <form name="ss">
+    <label for="stage">ステージを選択してください：</label>
+    <select id="stage" name="stage">
+    <option value="0"></option>
+    <option value="1">日本語中国語(1)</option>
+    <option value="2"></option>
+    <option value="3"></option>
+    <option value="4"></option>
+    </select>
+    <input type="button" value="開始" onclick="kaishi()">
+    </form>
+    <table border=1>
+        <tr>
+            <td id="a1" onclick="sentaku(1)">神経</td>
+            <td id="a2" onclick="sentaku(2)"></td>
+            <td id="a3" onclick="sentaku(3)"></td>
+            <td id="a4" onclick="sentaku(4)"></td>
+            <td id="a5" onclick="sentaku(5)"></td>
+            <td id="a6" onclick="sentaku(6)"></td>
+        </tr>
+        <tr>
+            <td id="a7" onclick="sentaku(7)"></td>
+            <td id="a8" onclick="sentaku(8)"></td>
+            <td id="a9" onclick="sentaku(9)"></td>
+            <td id="a10" onclick="sentaku(10)"></td>
+            <td id="a11" onclick="sentaku(11)"></td>
+            <td id="a12" onclick="sentaku(12)"></td>
+        </tr>
+        <tr>
+            <td id="a13" onclick="sentaku(13)"></td>
+            <td id="a14" onclick="sentaku(14)"></td>
+            <td id="a15" onclick="sentaku(15)"></td>
+            <td id="a16" onclick="sentaku(16)"></td>
+            <td id="a17" onclick="sentaku(17)"></td>
+            <td id="a18" onclick="sentaku(18)"></td>
+        </tr>
+        <tr>
+            <td id="a19" onclick="sentaku(19)"></td>
+            <td id="a20" onclick="sentaku(20)"></td>
+            <td id="a21" onclick="sentaku(21)"></td>
+            <td id="a22" onclick="sentaku(22)"></td>
+            <td id="a23" onclick="sentaku(23)"></td>
+            <td id="a24" onclick="sentaku(24)"></td>
+        </tr>
+        <tr>
+            <td id="a25" onclick="sentaku(25)"></td>
+            <td id="a26" onclick="sentaku(26)"></td>
+            <td id="a27" onclick="sentaku(27)"></td>
+            <td id="a28" onclick="sentaku(28)"></td>
+            <td id="a29" onclick="sentaku(29)"></td>
+            <td id="a30" onclick="sentaku(30)"></td>
+        </tr>
+        <tr>
+            <td id="a31" onclick="sentaku(31)"></td>
+            <td id="a32" onclick="sentaku(32)"></td>
+            <td id="a33" onclick="sentaku(33)"></td>
+            <td id="a34" onclick="sentaku(34)"></td>
+            <td id="a35" onclick="sentaku(35)"></td>
+            <td id="a36" onclick="sentaku(36)">衰弱</td>
+        </tr>
+    </table><br>
+    現在の手数:<span id="poinko">0</span>
+    <h2 id="seigo"></h2>
+    </div>
+    <script>
+    var point=0
+    var correct=0
+    var start=0
+    var drow=0
+    var ittenum=0
+    var fusei=0
+    var hiki=""
+    var hiki2=""
+    const jca1={"是":1,"〜である":1,"我":2,"わたし":2,"你":3,"あなた":3,"他":4,"彼":4,"她":5,"彼女":5,"这":6,"これ":6,"那":7,"あれ":7,"热":8,"あつい":8,"很":9,"とても":9,"非常":10,"非常に":10,"好吃":11,"美味しい":11,"最":12,"一番、最も":12,"大":13,"大きい":13,"今天":14,"きょう":14,"昨天":15,"きのう":15,"漂亮":16,"きれい":16,"真":17,"ほんとうに":17,"太":18,"〜すぎる":18}
+    const jcb1=["是","〜である","我","わたし","你","あなた","他","彼","她","彼女","这","これ","那","あれ","热","あつい","很","とても","非常","非常に","好吃","美味しい","最","一番、最も","大","大きい","今天","きょう","昨天","きのう","漂亮","きれい","真","ほんとうに","太","〜すぎる"]
+    var odaidic={}
+    var odailist=[]
+    function kaishi(){
+        const num = document.getElementById("stage").selectedIndex;
+        if(num==0){
+            alert('ステージが不正です')
+            return
+        }
+        reset()
+        if(num==1){
+            odaidic=jca1
+            odailist=Object.keys(jca1)
+        }
+        var o = odailist.length;
+        
+        //シャッフルアルゴリズム
+        while (o) {
+            var j = Math.floor( Math.random() * o );
+            var t = odailist[--o];
+            odailist[o] = odailist[j];
+            odailist[j] = t;
+        }
+        console.log(odailist)
+        var l=1
+        start=1
+    }
+    function reset(){
+        for(var i=1;i<37;i++){
+            var ai="a"+i
+            document.getElementById(ai).innerHTML=""
+        }
+        point=0
+        corrext=0
+    }
+    function sentaku(hiita){
+        if(start==0){
+            return
+        }
+        if(fusei==1){
+            document.getElementById(hiki).innerHTML=""
+            document.getElementById(hiki2).innerHTML=""
+            fusei=0
+        }
+        if(drow==0){
+            hiki="a"+hiita
+            if(document.getElementById(hiki).innerHTML!=""){
+                alert("すでに引いています")
+                return
+            }
+            
+            document.getElementById(hiki).innerHTML=odailist[hiita-1]
+            drow=1
+            ittenum=hiita
+        }else if(drow==1){
+            hiki="a"+hiita
+            if(document.getElementById(hiki).innerHTML!=""){
+                alert("すでに引いています")
+                return
+            }
+            hiki2="a"+ittenum
+            document.getElementById(hiki).innerHTML=odailist[hiita-1]
+            if(odaidic[odailist[hiita-1]]==odaidic[odailist[ittenum-1]]){
+                document.getElementById("seigo").innerHTML="正解！"
+                correct+=1
+            }else{
+                document.getElementById("seigo").innerHTML=odailist[hiita-1]+" は不正解..."
+                fusei=1
+            }
+            point+=1
+            document.getElementById('poinko').innerHTML=point
+            drow=0
+        }
+        if(correct==18){
+            alert("終了！手数は"+point+でした)
+            reset()
+            start=0
+        } 
+    }
+    </script>
+</body>
+</html>
