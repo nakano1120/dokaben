@@ -38,27 +38,43 @@
     <div class="youso">
     <form name="ss">
     <label for="stage">ステージを選択してください：</label>
-    <select id="stage" name="stage">
-    <option value="0"></option>
-    <option value="1">日本語中国語(1)</option>
-    <option value="2">日本史年号(1)</option>
+    <select name="league" id="classes" onchange="teamSet()">
+        <option value="0">=ステージを選択=</option>
+        <option value="1">日本語中国語</option>
+        <option value="2">日本史年号</option>
+        <option value="1">class 1</option>
+    </select>
+    <select id="level">
+    <option value="0">=========</option>
+    <option value="1"></option>
+    <option value="2"></option>
     <option value="3"></option>
     <option value="4"></option>
+    <option value="5"></option>
+    <option value="6"></option>
+    <option value="7"></option>
+    <option value="8"></option>
+    <option value="9"></option>
+    <option value="10"></option>
     </select>
-    <input type="button" value="開始" onclick="kaishi()">
+    <input type="button" value="開始" onclick="kaishi(1)">
+    <input type="button" value="対戦" onclick="kaishi(2)">
     </form>
+    <h1 id="dare"></h1>
     <table border=1>
         <tr>
             <td id="a1" onclick="sentaku(1)">神経</td>
             <td id="a2" onclick="sentaku(2)"></td>
             <td id="a3" onclick="sentaku(3)"></td>
             <td id="a4" onclick="sentaku(4)"></td>
-            <td id="a5" onclick="sentaku(5)"></td>
-            <td id="a6" onclick="sentaku(6)"></td>
         </tr>
         <tr>
+            <td id="a5" onclick="sentaku(5)"></td>
+            <td id="a6" onclick="sentaku(6)"></td>
             <td id="a7" onclick="sentaku(7)"></td>
             <td id="a8" onclick="sentaku(8)"></td>
+        </tr>
+        <tr>
             <td id="a9" onclick="sentaku(9)"></td>
             <td id="a10" onclick="sentaku(10)"></td>
             <td id="a11" onclick="sentaku(11)"></td>
@@ -69,38 +85,18 @@
             <td id="a14" onclick="sentaku(14)"></td>
             <td id="a15" onclick="sentaku(15)"></td>
             <td id="a16" onclick="sentaku(16)"></td>
-            <td id="a17" onclick="sentaku(17)"></td>
-            <td id="a18" onclick="sentaku(18)"></td>
-        </tr>
-        <tr>
-            <td id="a19" onclick="sentaku(19)"></td>
-            <td id="a20" onclick="sentaku(20)"></td>
-            <td id="a21" onclick="sentaku(21)"></td>
-            <td id="a22" onclick="sentaku(22)"></td>
-            <td id="a23" onclick="sentaku(23)"></td>
-            <td id="a24" onclick="sentaku(24)"></td>
-        </tr>
-        <tr>
-            <td id="a25" onclick="sentaku(25)"></td>
-            <td id="a26" onclick="sentaku(26)"></td>
-            <td id="a27" onclick="sentaku(27)"></td>
-            <td id="a28" onclick="sentaku(28)"></td>
-            <td id="a29" onclick="sentaku(29)"></td>
-            <td id="a30" onclick="sentaku(30)"></td>
-        </tr>
-        <tr>
-            <td id="a31" onclick="sentaku(31)"></td>
-            <td id="a32" onclick="sentaku(32)"></td>
-            <td id="a33" onclick="sentaku(33)"></td>
-            <td id="a34" onclick="sentaku(34)"></td>
-            <td id="a35" onclick="sentaku(35)"></td>
-            <td id="a36" onclick="sentaku(36)">衰弱</td>
         </tr>
     </table><br>
     現在の手数:<span id="poinko">0</span>
     <h2 id="seigo"></h2>
     </div>
     <script>
+    var class_jc =new Array(
+        "=日本語中国語=","その1(☆1)","その2(☆1)","-","-","-","-","-","-","-","-"
+    );
+    var class_his =new Array(
+        "=歴史年号=","その1(☆2)","その2(☆1)","-","-","-","-","-","-","-","-"
+    );
     var point=0
     var correct=0
     var start=0
@@ -109,23 +105,37 @@
     var fusei=0
     var hiki=""
     var hiki2=""
-    const jc1={"是":1,"〜である":1,"我":2,"わたし":2,"你":3,"あなた":3,"他":4,"彼":4,"她":5,"彼女":5,"这":6,"これ":6,"那":7,"あれ":7,"热":8,"あつい":8,"很":9,"とても":9,"非常":10,"非常に":10,"好吃":11,"美味しい":11,"最":12,"一番、最も":12,"大":13,"大きい":13,"今天":14,"きょう":14,"昨天":15,"きのう":15,"漂亮":16,"きれい":16,"真":17,"ほんとうに":17,"太":18,"〜すぎる":18}
-    const his1={"聖徳太子摂政に":1,"593":1,"平城京":2,"710":2,"平安京":3,"794":3,"鎌倉幕府滅亡":4,"1333":4,"鉄砲伝来":5,"1543":5,"秀吉全国統一":6,"1590":6,"関ヶ原の戦い":7,"1600":7,"異国船打払令":8,"1825":8,"ペリー浦賀来航":9,"1853":9,"王政復古の大号令":10,"1867":10,"廃藩置県":11,"1871":11,"日露戦争":12,"1904":12,"関東大震災":13,"1923":13,"二・二六事件":14,"1936":14,"日本国憲法":15,"1946":15,"東京オリンピック":16,"1964":16,"沖縄本土復帰":17,"1972":17,"ベルリンの壁崩壊":18,"1989":18}
+    var fukusu=0
+    var dare=1
+    var win1p=0
+    var win2p=0
+    const jc1={"是":1,"〜である":1,"我":2,"わたし":2,"你":3,"あなた":3,"他":4,"彼":4,"她":5,"彼女":5,"这":6,"これ":6,"那":7,"あれ":7,"热":8,"あつい":8}
+    const jc2={"很":9,"とても":9,"非常":10,"非常に":10,"好吃":11,"美味しい":11,"最":12,"一番、最も":12,"大":13,"大きい":13,"今天":14,"きょう":14,"昨天":15,"きのう":15,"漂亮":16,"きれい":16}
+    const his1={"聖徳太子摂政に":1,"593":1,"平城京":2,"710":2,"平安京":3,"794":3,"鎌倉幕府滅亡":4,"1333":4,"鉄砲伝来":5,"1543":5,"秀吉全国統一":6,"1590":6,"関ヶ原の戦い":7,"1600":7,"異国船打払令":8,"1825":8}
+    const his2={"ペリー浦賀来航":9,"1853":9,"王政復古の大号令":10,"1867":10,"廃藩置県":11,"1871":11,"日露戦争":12,"1904":12,"関東大震災":13,"1923":13,"二・二六事件":14,"1936":14,"日本国憲法":15,"1946":15,"東京オリンピック":16,"1964":16}
     var odaidic={}
     var odailist=[]
-    function kaishi(){
-        const num = document.getElementById("stage").selectedIndex;
-        if(num==0){
+    function kaishi(player){
+        const num2 = document.getElementById("classes").selectedIndex;
+        const num = document.getElementById("level").selectedIndex;
+        now=num2*10+num-10
+        if(num==0 || num2==0){
             alert('ステージが不正です')
             return
         }
         reset()
-        if(num==1){
+        if(now==1){
             odaidic=jc1
-            odailist=Object.keys(jca1)
-        }else if(num==2){
+            odailist=Object.keys(jc1)
+        }else if(now==2){
+            odaidic=jc2
+            odailist=Object.keys(jc2)
+        }else if(now==11){
             odaidic=his1
             odailist=Object.keys(his1)
+        }else if(now==12){
+            odaidic=his2
+            odailist=Object.keys(his2)
         }
         var o = odailist.length;
         
@@ -139,9 +149,16 @@
         console.log(odailist)
         var l=1
         start=1
+        dare=1
+        if(player==2){
+            fukusu=1
+            document.getElementById("dare").innerHTML=dare+"Pの出番です"
+        }else{
+            fukusu=0
+        }
     }
     function reset(){
-        for(var i=1;i<37;i++){
+        for(var i=1;i<17;i++){
             var ai="a"+i
             document.getElementById(ai).innerHTML=""
         }
@@ -178,6 +195,13 @@
             if(odaidic[odailist[hiita-1]]==odaidic[odailist[ittenum-1]]){
                 document.getElementById("seigo").innerHTML="正解！"
                 correct+=1
+                if(fukusu==1){
+                    if(dare==1){
+                        win1p+=1
+                    }else if(dare==2){
+                        win2p+=1
+                    }
+                }
             }else{
                 document.getElementById("seigo").innerHTML=odailist[hiita-1]+" は不正解..."
                 fusei=1
@@ -185,12 +209,41 @@
             point+=1
             document.getElementById('poinko').innerHTML=point
             drow=0
+            if(fukusu==1){
+                if(dare==1){
+                    dare=2
+                }else if(dare==2){
+                    dare=1
+                }
+                document.getElementById("dare").innerHTML=dare+"Pの出番です"
+            }
         }
-        if(correct==18){
-            alert("終了！手数は"+point+でした)
+        if(correct>=8){
+            if(fukusu==1){
+                alert("終了！1P "+win1p+"vs2P "+win2p)
+            }else{
+                alert("終了！手数は"+point+"でした")
+            }
             reset()
             start=0
         } 
+    }
+    function teamSet(){
+
+//オプションタグを連続して書き換える
+        for ( i=0; i<11; i++ ){
+
+        //選択したリーグによって分岐
+            switch (document.getElementById("classes").selectedIndex){
+                    case 0: document.getElementById("level").options[i].text="";break;
+                    case 1: document.getElementById("level").options[i].text=class_jc[i];break;
+                    case 2: document.getElementById("level").options[i].text=class_his[i];break;
+                    case 3: document.getElementById("level").options[i].text="";break;
+            }
+        }
+
+        //チーム名のセレクトボックスの選択番号を０にする
+        document.getElementById("level").selectedIndex=0;
     }
     </script>
 </body>
