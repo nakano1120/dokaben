@@ -5,83 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        @font-face {
-            font-family: 'dokabenfont';
-            src: url("NewDokabenFont_.otf");
-        }
-        #dokaben{
-            font-size:1000%;
-            color:#ff3300;
-        }
-        .ani0{
-            transform: rotateX(88deg);
-        }
-        .ani1 {
-            transform: rotateX(80deg);
-        }
-        .ani2 {
-            transform: rotateX(65deg);
-        }
-        .ani3 {
-            transform: rotateX(50deg);
-        }
-        .ani4 {
-            transform: rotateX(40deg);
-        }
-        .ani5 {
-            transform: rotateX(30deg);
-        }
-        .ani6 {
-            transform: rotateX(22deg);
-        }
-        .ani7 {
-            transform: rotateX(14deg);
-        }  
-        .ani8 {
-            transform: rotateX(7deg);
-        } 
-        .ani9 {
-            transform: rotateX(0deg);
-        }     
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="ani9" id="dokaben">ドカベン</div>
-    <form name="aaa">
-    <input type="text" id="dokabentext" value="ドカベン"><input type="button" name="db" id="dokabutton" value="ドカベンする" onclick="dokabenscript()">
-    </form>
-    <script>
-        var aaa=0
-        var count=1
-        function dokabenscript(){
-            if(aaa==1){
-                return;
-            }
-            aaa=1
-            var obj = document.getElementById("dokaben");
-            obj.innerHTML=document.getElementById("dokabentext").value;
-            count = 0;
-            obj.classList.remove("ani9")
-            obj.classList.remove("ani8")
-            obj.classList.remove("ani7")
-            obj.classList.remove("ani6")
-            obj.classList.remove("ani5")
-            obj.classList.remove("ani4")
-            obj.classList.remove("ani3")
-            obj.classList.remove("ani2")
-            obj.classList.remove("ani1")
-            obj.classList.add("ani0")
-            var id = setInterval(function(){
-                obj.classList.remove("ani"+count);
-                count++;
-                obj.classList.add("ani"+count);
-                if(count >= 9){
-                    clearInterval(id);　//idをclearIntervalで指定している
-                }
-            },200)
-            aaa=0
-        }
-    </script>
+    <b><div class="dokaben" id="kadoben">ドカベン</div></b>
+    <input type="text" id="dokabentext" value="ドカベン">
+    <input type="button" name="db" id="dokabutton" value="ドカベンする" onclick="dokabenscript()">
+    <script src="script.js"></script>
 </body>
 </html>
