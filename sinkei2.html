@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body{
+        text-align:center;
+        background-color:beige;
+    }
+    .youso{
+        display:inline-block;
+        margin:0 auto;
+        width:80%;
+        background-color:#ffffff;
+    }
+    table{
+        display:inline-block;
+        margin:0 auto;
+        background-color:darkseagreen;
+        border-radius:10px;
+    }
+    td{
+        width:90px;
+        height:90px;
+        border-radius:10px;
+        font-size:150%;
+    }
+    td:hover{
+        background-color:deeppink;
+    }
+    </style>
+</head>
+<body>
+    <h1>神経衰弱</h1>
+    <div class="youso">
+    <form name="ss">
+    <label for="stage">ステージを選択してください：</label>
+    <select name="league" id="classes" onchange="teamSet()">
+        <option value="0">=ステージを選択=</option>
+        <option value="1">日本語中国語</option>
+        <option value="2">日本史年号</option>
+        <option value="1">class 1</option>
+    </select>
+    <select id="level">
+    <option value="0">=========</option>
+    <option value="1"></option>
+    <option value="2"></option>
+    <option value="3"></option>
+    <option value="4"></option>
+    <option value="5"></option>
+    <option value="6"></option>
+    <option value="7"></option>
+    <option value="8"></option>
+    <option value="9"></option>
+    <option value="10"></option>
+    </select>
+    <input type="button" value="開始" onclick="kaishi(1)">
+    <input type="button" value="対戦" onclick="kaishi(2)">
+    </form>
+    <h1 id="dare"></h1>
+    <table border=1>
+        <tr>
+            <td id="a1" onclick="sentaku(1)">神経</td>
+            <td id="a2" onclick="sentaku(2)"></td>
+            <td id="a3" onclick="sentaku(3)"></td>
+            <td id="a4" onclick="sentaku(4)"></td>
+        </tr>
+        <tr>
+            <td id="a5" onclick="sentaku(5)"></td>
+            <td id="a6" onclick="sentaku(6)"></td>
+            <td id="a7" onclick="sentaku(7)"></td>
+            <td id="a8" onclick="sentaku(8)"></td>
+        </tr>
+        <tr>
+            <td id="a9" onclick="sentaku(9)"></td>
+            <td id="a10" onclick="sentaku(10)"></td>
+            <td id="a11" onclick="sentaku(11)"></td>
+            <td id="a12" onclick="sentaku(12)"></td>
+        </tr>
+        <tr>
+            <td id="a13" onclick="sentaku(13)"></td>
+            <td id="a14" onclick="sentaku(14)"></td>
+            <td id="a15" onclick="sentaku(15)"></td>
+            <td id="a16" onclick="sentaku(16)"></td>
+        </tr>
+    </table><br>
+    残りのペア:<span id="poinko">0</span>
+    時間：<span id="PassageArea">0</span>
+    
+    <h2 id="seigo"></h2>
+    </div>
+    <script>
+    let class_jc =new Array(
+        "=日本語中国語=","その1(☆1)","その2(☆1)","-","-","-","-","-","-","-","-"
+    );
+    let class_his =new Array(
+        "=歴史年号=","その1(☆2)","その2(☆1)","-","-","-","-","-","-","-","-"
+    );
+    let point=0
+    let correct=0
+    let start=0
+    let drow=0
+    let ittenum=0
+    let fusei=0
+    let hiki=""
+    let hiki2=""
+    let fukusu=0
+    let dare=1
+    let win1p=0
+    let win2p=0
+    const jc1={"是":1,"〜である":1,"我":2,"わたし":2,"你":3,"あなた":3,"他":4,"彼":4,"她":5,"彼女":5,"这":6,"これ":6,"那":7,"あれ":7,"热":8,"あつい":8}
+    const jc2={"很":9,"とても":9,"非常":10,"非常に":10,"好吃":11,"美味しい":11,"最":12,"一番、最も":12,"大":13,"大きい":13,"今天":14,"きょう":14,"昨天":15,"きのう":15,"漂亮":16,"きれい":16}
+    const his1={"聖徳太子摂政に":1,"593":1,"平城京":2,"710":2,"平安京":3,"794":3,"鎌倉幕府滅亡":4,"1333":4,"鉄砲伝来":5,"1543":5,"秀吉全国統一":6,"1590":6,"関ヶ原の戦い":7,"1600":7,"異国船打払令":8,"1825":8}
+    const his2={"ペリー浦賀来航":9,"1853":9,"王政復古の大号令":10,"1867":10,"廃藩置県":11,"1871":11,"日露戦争":12,"1904":12,"関東大震災":13,"1923":13,"二・二六事件":14,"1936":14,"日本国憲法":15,"1946":15,"東京オリンピック":16,"1964":16}
+    let odaidic={}
+    let odailist=[]
+    function kaishi(player){
+        const num2 = document.getElementById("classes").selectedIndex;
+        const num = document.getElementById("level").selectedIndex;
+        now=num2*10+num-10
+        if(num==0 || num2==0){
+            alert('ステージが不正です')
+            return
+        }
+        reset()
+        if(now==1){
+            odaidic=jc1
+            odailist=Object.keys(jc1)
+        }else if(now==2){
+            odaidic=jc2
+            odailist=Object.keys(jc2)
+        }else if(now==11){
+            odaidic=his1
+            odailist=Object.keys(his1)
+        }else if(now==12){
+            odaidic=his2
+            odailist=Object.keys(his2)
+        }
+        let o = odailist.length;
+        
+        //シャッフルアルゴリズム
+        while (o) {
+            let j = Math.floor( Math.random() * o );
+            let t = odailist[--o];
+            odailist[o] = odailist[j];
+            odailist[j] = t;
+        }
+        for(let i=1;i<=odailist.length;i++){
+            let hima="a"+i
+            document.getElementById(hima).innerHTML=odailist[i-1]
+        }
+        console.log(odailist)
+        let l=1
+        start=1
+        dare=1
+        if(player==2){
+            fukusu=1
+            document.getElementById("dare").innerHTML=dare+"Pの出番です"
+        }else{
+            fukusu=0
+        }
+        startShowing()
+    }
+    function reset(){
+        for(let i=1;i<17;i++){
+            let ai="a"+i
+            document.getElementById(ai).innerHTML=""
+        }
+        point=0
+        corrext=0
+    }
+    function sentaku(hiita){
+        if(start==0){
+            return
+        }
+        if(fusei==1){
+            document.getElementById(hiki).style.backgroundColor="darkseagreen"
+            document.getElementById(hiki2).style.backgroundColor="darkseagreen"
+            fusei=0
+        }
+        if(drow==0){
+            hiki="a"+hiita
+            if(document.getElementById(hiki).style.color=="green"){
+                alert("すでに引いています")
+                return
+            }
+            
+            document.getElementById(hiki).style.backgroundColor="pink"
+            drow=1
+            ittenum=hiita
+        }else if(drow==1){
+            hiki="a"+hiita
+            if(document.getElementById(hiki).style.color=="green" || hiita==ittenum){
+                alert("すでに引いています")
+                return
+            }
+            hiki2="a"+ittenum
+            document.getElementById(hiki).style.backgroundColor="pink"
+            if(odaidic[odailist[hiita-1]]==odaidic[odailist[ittenum-1]]){
+                document.getElementById("seigo").innerHTML="正解！"
+                point+=1
+                document.getElementById(hiki).style.backgroundColor="green"
+                document.getElementById(hiki2).style.backgroundColor="green"
+                correct+=1
+                if(fukusu==1){
+                    if(dare==1){
+                        win1p+=1
+                    }else if(dare==2){
+                        win2p+=1
+                    }
+                }
+            }else{
+                document.getElementById("seigo").innerHTML=odailist[hiita-1]+" は不正解..."
+                fusei=1
+            }
+            
+            document.getElementById('poinko').innerHTML=(8-point)
+            drow=0
+            if(fukusu==1){
+                if(dare==1){
+                    dare=2
+                }else if(dare==2){
+                    dare=1
+                }
+                document.getElementById("dare").innerHTML=dare+"Pの出番です"
+            }
+        }
+        if(correct>=8){
+            stopShowing()
+            if(fukusu==1){
+                alert("終了！1P "+win1p+"vs2P "+win2p)
+            }else{
+                alert("終了！時間は"+PassSec/10+"秒でした")
+            }
+            reset()
+            start=0
+        } 
+    }
+    function teamSet(){
+
+//オプションタグを連続して書き換える
+        for ( i=0; i<11; i++ ){
+
+        //選択したリーグによって分岐
+            switch (document.getElementById("classes").selectedIndex){
+                    case 0: document.getElementById("level").options[i].text="";break;
+                    case 1: document.getElementById("level").options[i].text=class_jc[i];break;
+                    case 2: document.getElementById("level").options[i].text=class_his[i];break;
+                    case 3: document.getElementById("level").options[i].text="";break;
+            }
+        }
+
+        //チーム名のセレクトボックスの選択番号を０にする
+        document.getElementById("level").selectedIndex=0;
+    }
+    var PassSec;   // 秒数カウント用変数
+    
+    // 繰り返し処理の中身
+    function showPassage() {
+        PassSec++;   // カウントアップ
+        var msg = "" + PassSec/10 + "秒";   // 表示文作成
+        document.getElementById("PassageArea").innerHTML = msg;   // 表示更新
+    }
+    
+    // 繰り返し処理の開始
+    function startShowing() {
+        PassSec = 0;   // カウンタのリセット
+        PassageID = setInterval('showPassage()',100);   // タイマーをセット(1000ms間隔)
+    }
+    
+    // 繰り返し処理の中止
+    function stopShowing() {
+        clearInterval( PassageID );   // タイマーのクリア
+    }
+    </script>
+</body>
+</html>
