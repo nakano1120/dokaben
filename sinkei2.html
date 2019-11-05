@@ -113,6 +113,7 @@
     let win1p=0
     let win2p=0
     let bak=0
+    let miss=0
     const jc1={"是":1,"〜である":1,"我":2,"わたし":2,"你":3,"あなた":3,"他":4,"彼":4,"她":5,"彼女":5,"这":6,"これ":6,"那":7,"あれ":7,"热":8,"あつい":8}
     const jc2={"很":9,"とても":9,"非常":10,"非常に":10,"好吃":11,"美味しい":11,"最":12,"一番、最も":12,"大":13,"大きい":13,"今天":14,"きょう":14,"昨天":15,"きのう":15,"漂亮":16,"きれい":16}
     const jc3={"爸爸":1,"お父さん":1,"妈妈":2,"お母さん":2,"哥哥":3,"お兄さん":3,"姐姐":4,"お姉さん":4,"兄弟姐妹":5,"きょうだい":5,"孩子":6,"子供":6,"朋友":7,"友達":7,"名字":8,"名前":8}
@@ -178,6 +179,7 @@
             document.getElementById(ai).style.backgroundColor="darkseagreen"
         }
         point=0
+        miss=0
         corrext=0
     }
     function sentaku(hiita){
@@ -222,6 +224,7 @@
                 }
             }else{
                 document.getElementById("seigo").innerHTML=odailist[hiita-1]+" は不正解..."
+                miss++
                 fusei=1
             }
             
@@ -242,6 +245,22 @@
                 alert("終了！1P "+win1p+"vs2P "+win2p)
             }else{
                 alert("終了！時間は"+PassSec/10+"秒でした")
+                let score=10000-PassSec*9-(miss*9)
+                let ran=""
+                if(score>7500){
+                    ran="S"
+                }else if(score>6000){
+                    ran="A"
+                }else if(score>5000){
+                    ran="B"
+                }else if(score>3500){
+                    ran="C"
+                }else if(score>2000){
+                    ran="D"
+                }else{
+                    ran="E"
+                }
+                alert("スコア："+score+"　あなたは"+ran+"ランクです！")
             }
             reset()
             start=0
