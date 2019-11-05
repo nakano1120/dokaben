@@ -7,6 +7,7 @@
     <title>Document</title>
     <style>
     body{
+        font-family: serif;
         text-align:center;
         background-color:beige;
     }
@@ -34,7 +35,7 @@
     </style>
 </head>
 <body>
-    <h1>神経衰弱</h1>
+    <h1>合わせゲーム</h1>
     <div class="youso">
     <form name="ss">
     <label for="stage">ステージを選択してください：</label>
@@ -94,7 +95,7 @@
     </div>
     <script>
     let class_jc =new Array(
-        "=日本語中国語=","その1(☆1)","その2(☆1)","-","-","-","-","-","-","-","-"
+        "=日本語中国語=","その1(☆1)","その2(☆1)","その3(☆2)","-","-","-","-","-","-","-"
     );
     let class_his =new Array(
         "=歴史年号=","その1(☆2)","その2(☆1)","-","-","-","-","-","-","-","-"
@@ -111,8 +112,10 @@
     let dare=1
     let win1p=0
     let win2p=0
+    let bak=0
     const jc1={"是":1,"〜である":1,"我":2,"わたし":2,"你":3,"あなた":3,"他":4,"彼":4,"她":5,"彼女":5,"这":6,"これ":6,"那":7,"あれ":7,"热":8,"あつい":8}
     const jc2={"很":9,"とても":9,"非常":10,"非常に":10,"好吃":11,"美味しい":11,"最":12,"一番、最も":12,"大":13,"大きい":13,"今天":14,"きょう":14,"昨天":15,"きのう":15,"漂亮":16,"きれい":16}
+    const jc3={"爸爸":1,"お父さん":1,"妈妈":2,"お母さん":2,"哥哥":3,"お兄さん":3,"姐姐":4,"お姉さん":4,"兄弟姐妹":5,"きょうだい":5,"孩子":6,"子供":6,"朋友":7,"友達":7,"名字":8,"名前":8}
     const his1={"聖徳太子摂政に":1,"593":1,"平城京":2,"710":2,"平安京":3,"794":3,"鎌倉幕府滅亡":4,"1333":4,"鉄砲伝来":5,"1543":5,"秀吉全国統一":6,"1590":6,"関ヶ原の戦い":7,"1600":7,"異国船打払令":8,"1825":8}
     const his2={"ペリー浦賀来航":9,"1853":9,"王政復古の大号令":10,"1867":10,"廃藩置県":11,"1871":11,"日露戦争":12,"1904":12,"関東大震災":13,"1923":13,"二・二六事件":14,"1936":14,"日本国憲法":15,"1946":15,"東京オリンピック":16,"1964":16}
     let odaidic={}
@@ -132,6 +135,9 @@
         }else if(now==2){
             odaidic=jc2
             odailist=Object.keys(jc2)
+        }else if(now==3){
+            odaidic=jc3
+            odailist=Object.keys(jc3)
         }else if(now==11){
             odaidic=his1
             odailist=Object.keys(his1)
@@ -162,6 +168,7 @@
         }else{
             fukusu=0
         }
+        stopShowing()
         startShowing()
     }
     function reset(){
@@ -269,13 +276,17 @@
     
     // 繰り返し処理の開始
     function startShowing() {
+        bak=1
         PassSec = 0;   // カウンタのリセット
         PassageID = setInterval('showPassage()',100);   // タイマーをセット(1000ms間隔)
     }
     
     // 繰り返し処理の中止
     function stopShowing() {
-        clearInterval( PassageID );   // タイマーのクリア
+        if(bak!=0){
+            clearInterval( PassageID );   // タイマーのクリア
+            bak=0
+        }
     }
     </script>
 </body>
