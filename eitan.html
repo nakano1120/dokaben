@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="なっかのう" />
+    <meta name="twitter:title" content="瞬間英単語" />
+    <meta name="twitter:description" content="英語力を向上するページです。" />
+    <meta name="twitter:image" content="https://flashkorean.herokuapp.com/man.png" />
+    <meta name="twitter:url" content="https://flashkorean.herokuapp.com/eitan.html" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>瞬間英単語</title>
+    <style>
+    body{
+        margin: 20px;	/* bodyの外側の余白を指定する */
+        padding: 50px 10px 50px 10px;	/* bodyの内側余白を指定する(上:右:下:左) */
+        background-color:#eeeeee;
+    }
+    .Header {
+        position: fixed;	/* ヘッダーを固定する */
+        top: 0;	/* 上部から配置の基準位置を決める */ 
+        left: 0;	/* 左から配置の基準位置を決める */ 
+        width: 100%;	/* ヘッダーの横幅を指定する */
+        height: 35px;	/* ヘッダーの高さを指定する */
+        padding: 10px;	/* ヘッダーの余白を指定する(上下左右) */
+        background-color: #333333;	/* ヘッダーの背景色を指定する */
+        color: #ffffff;	/* フォントの色を指定する */
+        font-size:150%;
+    }	
+    .Contents {
+        width: 100%;	/* コンテンツの横幅を指定する */
+        overflow: auto; /* コンテンツの表示を自動に設定（スクロール） */
+    }
+    .box11{
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        color: #4a4d5e;
+        background: white;
+        border-top: solid 5px #5d627b;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+    }
+    .box11 p {
+        margin: 0; 
+        padding: 10px;
+    }
+    #box11{
+        display:none;
+    }
+    .center{
+        text-align:center;
+    }
+    input[type="text"]{
+        outline: none;
+        border: 1px solid #aaa;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        width:70%;
+        text-align:center;
+        height:25px;
+        font-size:20px;
+    }
+    input[type="text"]:focus{
+        box-shadow: 0 0 7px #1abc9c;
+        border: 1px solid #1abc9c;
+    }
+    #moji{
+        border-radius: 3px ;
+        padding: 5px;
+        background-color: skyblue;
+    }
+    .btn-push {
+        display: inline-block;
+        max-width: 180px;
+        text-align: left;
+        background-color: #1abc9c;
+        font-size: 16px;
+        color: #FFF;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 24px;
+        border-radius: 4px;
+        border-bottom: 4px solid #1add9c;
+    }
+
+    .btn-push:active {
+        transform: translateY(4px);
+        border-bottom: none;
+    }
+    .box2 {
+        display:none;
+        border: 1px dashed #ccc;
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        font-weight: bold;
+        color: #ff0000;/*文字色*/
+        background: #FFF;
+        border: solid 3px #d36060;/*線*/
+        border-radius: 10px;/*角の丸み*/
+    }
+    .box2 p {
+        margin: 0; 
+        padding: 0;
+    }
+    #mono2{
+        color: #00aa00;
+        border: solid 3px #60d373;/*線*/
+    }
+    .lin{
+        float:right;
+        color:greenyellow;
+        padding: 0px 50px;
+    }
+    #twitter{
+        display:none;
+    }
+    .twitter {
+        background-color: #008DDE;
+        box-shadow: 0 4px 0 #0078BD;
+        
+        display: inline;
+        position: relative;
+        font-family: Arial;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        border-radius: 5px;
+        padding: 14px 80px;
+    }
+    .twitter:active {
+    top: 2px;
+        box-shadow: 0 2px 0 #0078BD;
+    }
+    .twitter:hover {
+        background-color: #1397D8;
+    }
+    </style>
+</head>
+<body>
+    <div class="Header">瞬間英単語<a href="hang.html" class="lin">瞬間韓単語</a></div>	
+    <div class="Contents">
+        <div class="box11">
+            <p>
+                <b>現在の経験値：</b><span id="exp"></span>
+            </p>
+        </div>
+        <div class="box11" id="time">
+            <p>
+                <b>時間：</b><span id="timebox">0秒</span>
+            </p>
+        </div>
+        <div class="box11" id="menubox">
+            <p>
+                レベル選択（左のリストから選択してください。）<br><br>
+                <select name="league" id="classes" onchange="teamSet()">
+                    <option value="0">=ステージを選択=</option>
+                    <option value="1">Old-1</option>
+                    <option value="2">Old-2</option>
+                    <option value="1">class 1</option>
+                </select>
+                <select id="level">
+                <option value="0">=========</option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                <option value="6"></option>
+                <option value="7"></option>
+                <option value="8"></option>
+                <option value="9"></option>
+                <option value="10"></option>
+                </select>
+                <input type="button" value="開始する" onclick="kantango();"><br>
+                ※固有名詞以外は小文字から始めてください。ピリオドはつけません。文字数は空白を含みます。<br>
+                <div id="twitter">
+                        <a href="#" class="twitter" onclick="botan();">Twitter</a>
+                </div>
+            </p>
+        </div>
+        <div class="box11 center" id="box11">
+            <p>
+                <div id="mono"class="box2">
+                    <p>正解不正解</p>
+                </div>
+                <div id="mono2"class="box2">
+                    <p>正解不正解</p>
+                </div>
+                <h1 id="monda">問題文</h1>
+                <span id="moji">●文字で回答</span><br><br>
+                <input type="text" id="kotae">
+                <div class="container">
+                    <a href="#" class="btn-push" onclick="kaitou();">回答</a>
+                </div>
+            </p>
+        </div>
+    </div>
+    <script>
+        let g_class=new Array(
+            "=Old-1=","レベル1(☆1)","レベル2(☆1)","レベル3(☆1)","レベル4(☆1)","レベル5(☆1)","レベル6(☆1)","レベル7(☆1)","レベル8(☆1)","レベル9(☆1)","レベル10(☆1)"
+        );
+
+        let f_class=new Array(
+            "=Old-2=","レベル11(☆2)","レベル12(☆2)","-","-","-","-","-","-","-","-"
+        );
+        let class_1=new Array(
+            "=class 1=","レベル1(☆3)","レベル2(☆3)","-","-","-","-","-","-","-","-"
+        );
+        let tango1=["午後","再び","年齢、年代","すべての","すでに","〜もまた","アメリカ合衆国","〜と、そして","怒った","りんご"]
+        let tantan1=["afternoon","again","age","all","already","also","America","and","angry","apple"]
+        let tango2=["質問","インターネット","テレビ","わかりました、もちろん","パパ、お父さん","いくつかの、いくらかの","花","私の","誕生日","かわいらしい、すてきな"]
+        let tantan2=["question","internet","TV","sure","dad","some","flower","my","birthday","lovely"]
+        let tango3=["問題","医者","私は","持っている","薬","を開く、を始める","を閉める、閉じる、","どうぞ〜（して）ください","外へ、外出して","そこに"]
+        let tantan3=["problem","doctor","I","have","medicine","open","close","please","out","there"]
+        let tango4=["〜を打つ、〜を叩く","球、ボール","コーチ","〜できる","〜を許す、理由、言い訳","宿題","授業","レポート、報告、〜を報告する","〜を書く、書く","かまわない、すばらしい、元気な"]
+        let tantan4=["hit","ball","coach","can","excuse","homework","class","report","write","fine"]
+        let tango5=["やあ、こんにちは","を与える","私に","ジャケット、上着","冷たい、寒い","本当に","空腹で","喉が渇いた","何、どんなもの","朝食"]
+        let tantan5=["hi","give","me","jacket","cold","really","hungry","thirsty","what","breakfast"]
+        let tango6=["卵","とてもいい、偉大な","彼女は","今、現在","すてきな","旅行","家へ、家庭、家庭の","さようなら、別れの挨拶","この、これ","もっと、より多くの"]
+        let tantan6=["egg","great","she","now","nice","trip","home","goodbye","this","more"]
+        let tango7=["了解、わかりました","（電話で）もしもし、こんにちは","あっ、おや、まあ","電話をかける、〜を呼ぶ、電話","〜に感謝する","プレゼント","財布、ハンドバッグ","〜を与える、〜を送る","giveの過去形","giveの過去分詞"]
+        let tantan7=["OK","hello","oh","call","thank","present","purse","give","gave","given"]
+        let tango8=["callの過去形、過去分詞","お母さん、母親","だから、とても、そんなに、","働く","私のもの","ピザ","すばらしい、最高の","わくわくするような","である（be動詞の主語が三人称単数現在形の場合）","私たちの"]
+        let tantan8=["called","mother","so","work","mine","pizza","super","exciting","is","our"]
+        let tango9=["ダンス、踊り","をする、行う、する","バスケットボール","完全に、絶対に","学校","〜の間に","あなたの","才能","いつもは、通常は","漫画、アニメ"]
+        let tantan9=["dance","do","basketball","absolutely","school","during","your","talent","usually","cartoon"]
+        let tango10=["暇な、無料の、自由な","コンテスト、競技会","行く、通う","通り","左に","区画、大きな塊、ブロック","右","警察","助ける","眺め、景色、意見、見解"]
+        let tantan10=["free","contest","go","street","left","block","right","police","help","view"]
+        let tango11=["山","湖","澄んだ、晴れた","おそらく、たぶん","〜し続ける","起きる(2単語)","まだ、それでも","今日は、今日","眠い","それは、それを"]
+        let tantan11=["mountain","lake","clear","maybe","continue","wake up","still","today","sleepy","it"]
+        let tango12=["〜に遅れる(3単語)","起き上がる(2単語)","〜もまた、〜すぎる","お茶、紅茶","それから、それなら","である（主語がyouまたは複数の現在形）","おいしい","美味しそうに見える（2単語）","ハワイ","どの、どちらの"]
+        let tantan12=["be late for","get up","too","tea","then","are","delicious","look good","Hawaii","which"]
+        let tango21=["〜を助ける","〜を試す、やってみる","〜を保持する","（動植物が）育つ、生える","〜のように思える、見える","〜を楽しむ","〜を生み出す、創造する","〜を選ぶ","〜を費やす、使う","〜に〜させてやる"]
+        let tantan21=["help","try","hold","grow","seem","enjoy","create","choose","spend","let"]
+        let tango22=["〜を助ける","〜を試す、やってみる","〜を保持する","（動植物が）育つ、生える","〜のように思える、見える","〜を楽しむ","〜を生み出す、創造する","〜を選ぶ","〜を費やす、使う","〜に〜させてやる"]
+        let tantan22=["help","try","hold","grow","seem","enjoy","create","choose","spend","let"]
+        let tango=[]
+        let tantan=[]
+        let now = 0
+        let i=0
+        let seito=0
+        let score=0
+        let cook;       //cookieデータを格納する変数
+        let cStart,cEnd;  //訪問回数部分を切取る為の位置を格納
+        let cnt;        //訪問回数を格納
+        function kantango(){
+            now=0
+            seito=0
+            document.getElementById("kotae").value=""
+            let num = document.getElementById("level").selectedIndex;
+            let num2 = document.getElementById("classes").selectedIndex;
+            if(num == 0 || num2 == 0){
+                    alert('レベルが選択されていません。')
+                    return
+            }else{
+                    now=num2*10+num-10
+                    if(now==13||now==14||now==15||now==16||now==17||now==18||now==19||now==20||now>21){
+                        alert("現在、LV13~未実装です。")
+                        return;
+                    }
+                    document.getElementById("box11").style.display = "block";
+                    document.getElementById("menubox").style.display = "none";
+                    seito=0
+                    i=0
+                    eval("tango=tango"+now)
+                    eval("tantan=tantan"+now)
+                    document.getElementById("monda").innerHTML=tango[i]
+                    document.getElementById("moji").innerHTML=tantan[i].length+"文字で回答"
+                    document.getElementById("mono2").style.display = "none";
+                    document.getElementById("mono").style.display = "none";
+                    startShowing()
+            }
+        }
+        function kaitou(){
+            if (i==10){
+                alert("まずレベルを選択してください。");
+                return;
+            }
+            let kaito=document.getElementById("kotae").value
+            if (kaito==tantan[i]){
+                document.getElementById("mono2").style.display = "inline-block";
+                document.getElementById("mono").style.display = "none";
+                document.getElementById("mono2").innerHTML="正解<br>正答:"+tantan[i]+"<br>回答:"+kaito; 
+                let cook;       //cookieデータを格納する変数
+                let cStart,cEnd;  //訪問回数部分を切取る為の位置を格納
+                let cnt;        //訪問回数を格納
+
+                //cookieが使えるか確認
+                if (navigator.cookieEnabled)
+                    {
+                    cook=document.cookie + ";";  //変数cookにcookieデータを入れる
+                    
+                    //変数cStartにカウントデータの最初の位置を入れる
+                    cStart = cook.indexOf("counts=",0);
+                    
+                    //データの有無で分岐
+                    if (cStart == -1){
+                        //データの無い場合は最初の訪問ということ
+                        document.getElementById("exp").innerHTML=("1");
+                        
+                        //cookieに訪問回数=1を書き込む
+                        document.cookie="counts=1;";  
+                    }else{
+                        //カウントデータの最後の部分「;」の位置を取得
+                        cEnd=cook.indexOf(";",cStart);
+                        
+                        //数値の部分だけを切り取る
+                        cnt=cook.substring(cStart+7,cEnd);
+                        
+                        //数値に変換できない例外が出た時の処理
+                        try
+                        {
+                        //取得した回数に+1して表示する
+                        cnt=parseInt(cnt)+1;
+                        document.getElementById("exp").innerHTML=(cnt);
+                        
+                        //cookieに訪問回数を書き込む
+                        document.cookie="counts="+cnt+";";
+                        }
+                        catch(e)
+                        {
+                            document.getElementById("exp").innerHTML=("");
+                        }
+                    }
+                    }
+                    else
+                    {
+                    //cookieが使用できない時の処理
+                    document.getElementById("exp").innerHTML=""
+                }
+                seito+=1
+            }else{
+                document.getElementById("mono2").style.display = "none";
+                document.getElementById("mono").style.display = "inline-block";
+                document.getElementById("mono").innerHTML="不正解<br>正答:"+tantan[i]+"<br>回答:"+kaito;
+            }
+            i+=1
+            if(i==tantan.length){
+                document.getElementById("monda").innerHTML="終了<br>正答数："+tantan.length+"問中"+seito+"問"
+                alert("終了！時間は"+PassSec/10+"秒でした")
+                score=10000-PassSec*9-(tantan.length-seito)*300
+                let ran=""
+                if(score>7500){
+                    ran="S"
+                }else if(score>6000){
+                    ran="A"
+                }else if(score>5000){
+                    ran="B"
+                }else if(score>3500){
+                    ran="C"
+                }else if(score>2000){
+                    ran="D"
+                }else{
+                    ran="E"
+                }
+
+                alert("スコア："+score+"　あなたは"+ran+"ランクです！")
+                stopShowing()
+                document.getElementById("kotae").value=""
+                document.getElementById('twitter').style.display="block";
+                document.getElementById("menubox").style.display = "block";
+                return;
+            }
+            document.getElementById("monda").innerHTML=tango[i]
+            document.getElementById("moji").innerHTML=tantan[i].length+"文字で回答"
+            document.getElementById("kotae").value=""
+        }
+        function nextForm(){
+            if(event.keyCode == 13){
+                kaitou();
+            }
+        }
+        window.document.onkeydown = nextForm;
+        function openTwitter(text,url,hash,account) {
+	        let turl = "https://twitter.com/intent/tweet?text="+text+"&url="+url+"&hashtags="+hash+"&via="+account;
+	        window.open(turl,'_blank');
+        }
+        function botan(){
+            let num = document.getElementById("level").selectedIndex;
+            let keisan = String(parseInt(cnt)+parseInt(seito))
+            openTwitter("☆瞬間英単語☆ 問題No."+now+"で"+tantan.length+"問中"+seito+"問正解しました！現在の経験値は"+keisan+"です！","https://flashkorean.herokuapp.com/eitan.html","瞬間英単語","なっかのう");
+        }
+        function teamSet(){
+
+    //オプションタグを連続して書き換える
+            for ( i=0; i<11; i++ ){
+
+            //選択したリーグによって分岐
+                switch (document.getElementById("classes").selectedIndex){
+                        case 0: document.getElementById("level").options[i].text="";break;
+                        case 1: document.getElementById("level").options[i].text=g_class[i];break;
+                        case 2: document.getElementById("level").options[i].text=f_class[i];break;
+                        case 3: document.getElementById("level").options[i].text=class_1[i];break;
+                }
+            }
+
+            //チーム名のセレクトボックスの選択番号を０にする
+            document.getElementById("level").selectedIndex=0;
+        }
+
+        //cookieが使えるか確認
+        if (navigator.cookieEnabled)
+            {
+            cook=document.cookie + ";";  //変数cookにcookieデータを入れる
+            
+            //変数cStartにカウントデータの最初の位置を入れる
+            cStart = cook.indexOf("counts=",0);
+            
+            //データの有無で分岐
+            if (cStart == -1)
+            {
+                //データの無い場合は最初の訪問ということ
+                document.getElementById("exp").innerHTML=("0");
+                
+                //cookieに訪問回数=1を書き込む
+                document.cookie="counts=0;";  
+            }
+            else
+            {
+                //カウントデータの最後の部分「;」の位置を取得
+                cEnd=cook.indexOf(";",cStart);
+                
+                //数値の部分だけを切り取る
+                cnt=cook.substring(cStart+7,cEnd);
+                
+                //数値に変換できない例外が出た時の処理
+                try
+                {
+                document.getElementById("exp").innerHTML=(cnt);
+                
+                //cookieに訪問回数を書き込む
+                document.cookie="counts="+cnt+";";
+                }
+                catch(e)
+                {
+                    document.getElementById("exp").innerHTML=("");
+                }
+            }
+            }
+            else
+            {
+            //cookieが使用できない時の処理
+            document.getElementById("exp").innerHTML=""
+        }
+        let PassSec;   // 秒数カウント用変数
+        
+        // 繰り返し処理の中身
+        function showPassage() {
+            PassSec++;   // カウントアップ
+            let msg = "" + PassSec/10 + "秒";   // 表示文作成
+            document.getElementById("timebox").innerHTML = msg;   // 表示更新
+        }
+        
+        // 繰り返し処理の開始
+        function startShowing() {
+            bak=1
+            PassSec = 0;   // カウンタのリセット
+            PassageID = setInterval('showPassage()',100);   // タイマーをセット(1000ms間隔)
+        }
+        
+        // 繰り返し処理の中止
+        function stopShowing() {
+            if(bak!=0){
+                clearInterval( PassageID );   // タイマーのクリア
+                bak=0
+            }
+        }
+        </script>
+</body>
+</html>
