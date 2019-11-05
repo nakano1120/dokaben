@@ -184,7 +184,7 @@
         }
         if(drow==0){
             hiki="a"+hiita
-            if(document.getElementById(hiki).style.backgroundColor=="green"){
+            if(document.getElementById(hiki).style.backgroundColor!="darkseagreen"){
                 document.getElementById("seigo").innerHTML=("すでに引いています")
                 return
             }
@@ -194,7 +194,7 @@
             ittenum=hiita
         }else if(drow==1){
             hiki="a"+hiita
-            if(document.getElementById(hiki).style.backgroundColor=="green" || hiita==ittenum){
+            if(document.getElementById(hiki).style.backgroundColor!="darkseagreen" || hiita==ittenum){
                 document.getElementById("seigo").innerHTML=("すでに引いています")
                 return
             }
