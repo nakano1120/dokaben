@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -185,7 +185,7 @@
         if(drow==0){
             hiki="a"+hiita
             if(document.getElementById(hiki).style.color=="green"){
-                alert("すでに引いています")
+                document.getElementById("seigo").innerHTML=("すでに引いています")
                 return
             }
             
@@ -195,7 +195,7 @@
         }else if(drow==1){
             hiki="a"+hiita
             if(document.getElementById(hiki).style.color=="green" || hiita==ittenum){
-                alert("すでに引いています")
+                document.getElementById("seigo").innerHTML=("すでに引いています")
                 return
             }
             hiki2="a"+ittenum
@@ -238,6 +238,7 @@
             }
             reset()
             start=0
+            correct=0
         } 
     }
     function teamSet(){
