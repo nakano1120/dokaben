@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界のナベアツ</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        h1{
+            text-align:center;
+        }
+        .box1{
+            text-align:center;
+            padding: 8px 19px;
+            margin: 2em 0;
+            color: #2c2c2f;
+            background: #cde4ff;
+            border-top: solid 5px #5989cf;
+            border-bottom: solid 5px #5989cf;
+        }
+        .box1 p{
+            margin: 0; 
+            padding: 0;
+        }
+        .box2{
+            text-align:center;
+            font-size:250%;
+            padding: 0.5em 1em;
+            margin: 2em 0;
+            color: #5d627b;
+            background: white;
+            border-top: solid 5px #5d627b;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+        }
+        .box2 p {
+            margin: 0; 
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>世界のナベアツScript</h1>
+    <div class="box1">
+        <p>
+            半角数字を入力：<input type="number" value="1" min="1" max="999" id="nabeatsu" onchange="ahonumber();"><br>
+            「スーパーアホモード」ずっとアホにする<input type="checkbox" id="everyaho" value="1">
+            <input type="button" value="ナベアツする" onclick="ahonumber()">
+        </p>
+    </div>
+    <div class="box2">
+        <p id="result">ぜろ</p>
+    </div>
+    <script>
+        ///アホ
+        const aho_1=["","いちっ！","にっ！","さーんっ！","よんっ！","ごっ！","ろくっ！","ななっ！","はちっ！","きゅうっ！"]
+        const aho_10=["","じゅう〜！","にじゅ〜！","さん！じゅ！","よんじゅ！","ごじゅ！","ろくじゅ〜っ！","ななじゅ！","はちじゅっ！","きゅうじゅ！"]
+        const aho_100=["","ひゃく！","にひゃく！","さんびゃ〜く！","よんひゃく！","ごひゃく〜！","ろっぴゃっく！","ななひゃくっ！","はっぴゃ〜く！","ん〜きゅうひゃく！"]
+        ///通常
+        const normal_1=["","いち","に","さん","よん","ご","ろく","なな","はち","きゅう"]
+        const normal_10=["","じゅう","にじゅう","さんじゅう","よんじゅう","ごじゅう","ろくじゅう","ななじゅう","はちじゅう","きゅうじゅう"]
+        const normal_100=["","ひゃく","にひゃく","さんびゃく","よんひゃく","ごひゃく","ろっぴゃく","ななひゃく","はっぴゃく","きゅうひゃく"]
+        function ahonumber(){
+            let normalnum=document.getElementById("nabeatsu").value///ボックスから持ってくる
+            if(normalnum>999 || normalnum<1 ){
+                alert("値が不正！オモロー！")
+                return
+            }
+            ///0をつけてエラー回避
+            let num="00"+normalnum
+            num=num.split("")
+            let result=""
+            ///スーパーアホモードか３がつくか３の倍数でアホ。それ以外は通常。
+            if(document.getElementById("everyaho").checked || normalnum % 3 == 0 || num.indexOf('3') != -1){
+                result=aho_100[parseInt(num[num.length-3])]+aho_10[parseInt(num[num.length-2])]+aho_1[parseInt(num[num.length-1])]
+                document.getElementById("result").style.color="#ff0000"///アホは赤い
+            }else{
+                result=normal_100[parseInt(num[num.length-3])]+normal_10[parseInt(num[num.length-2])]+normal_1[parseInt(num[num.length-1])]
+                document.getElementById("result").style.color="#000000"///通常は黒い
+            }
+            document.getElementById("result").innerHTML = result+"("+normalnum+")"///描画する
+        }
+    </script>
+</body>
+</html>
