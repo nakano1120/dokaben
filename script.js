@@ -1,7 +1,7 @@
 let play=0///今動いているか
 let count=1///アニメのカウント
 let dokaben = document.getElementById("kadoben");///動作をする要素
-
+var music = new Audio('nc150815.wav');
 function dokabenscript(){
     if(play>0){///もしプレイしていたら
         return;///やらせない（固い意志）
@@ -13,7 +13,7 @@ function dokabenscript(){
 
     count = 0;///カウントをゼロに
     dokaben.id=("ani0")///アニメをゼロに戻す
-
+    music.play();  // 再生
     let intarval = setInterval(function(){
 
         count++;///カウントしていく
@@ -24,6 +24,6 @@ function dokabenscript(){
             play=0///動いていないことにする
         }
 
-    },200)
+    },300)
     
 }
